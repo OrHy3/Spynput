@@ -1,3 +1,4 @@
 [submodule "libevdev"]
 	path = libevdev
-	url = ./libevdev
+	url = https://gitlab.freedesktop.org/libevdev/libevdev.git
+	branch = libevdev-1.11.0
