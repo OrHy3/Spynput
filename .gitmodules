@@ -1,0 +1,3 @@
+[submodule "libevdev"]
+	path = libevdev
+	url = ./libevdev
