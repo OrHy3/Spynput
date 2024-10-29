@@ -342,6 +342,12 @@ int main() {
 				skip = 1;
 				break;
 
+			default:
+
+				// Panic if it's a libevdev internal error
+				puts("There was an unexpected behavior");
+				exit(1);
+
 		}
 
 		// Nothing to do
