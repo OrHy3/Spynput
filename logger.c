@@ -188,7 +188,7 @@ int dir_watcher;
 
 // Signal handler
 void handler(int) {
-	puts("\nExiting...");
+	fputs("\nExiting...\n", stderr);
 	quitting = 1;
 	pthread_join(manager_t, NULL);
 	while (root_entry)
@@ -202,19 +202,19 @@ void process_error(int err) {
 	switch (err) {
 
 		case 1:
-			puts("Could not open event file");
+			fputs("Could not open event file\n", stderr);
 			exit(1);
 
 		case 2:
-			puts("Could not initialize event device");
+			fputs("Could not initialize event device\n", stderr);
 			exit(1);
 
 		case 3:
-			puts("Could not read /dev/input");
+			fputs("Could not read /dev/input\n", stderr);
 			exit(1);
 
 		case 4:
-			puts("Could not allocate memory");
+			fputs("Could not allocate memory\n", stderr);
 			exit(1);
 
 	}
@@ -276,14 +276,14 @@ int main() {
 
 	// SIGINT handler
 	if (signal(SIGINT, handler) == SIG_ERR) {
-		puts("Could not set signal handler");
+		fputs("Could not set signal handler\n", stderr);
 		return 1;
 	}
 
 	// Setup inotify to listen for new devices
 	dir_watcher = inotify_init1(IN_NONBLOCK);
 	if (dir_watcher < 0 || inotify_add_watch(dir_watcher, "/dev/input", IN_CREATE) == -1) {
-		puts("Could not initialize inotify");
+		fputs("Could not initialize inotify\n", stderr);
 		return 1;
 	}
 
@@ -292,7 +292,7 @@ int main() {
 	
 	// Device manager thread
 	if (pthread_create(&manager_t, NULL, manage_devices, (void*)0) != 0) {
-		puts("Could not create new thread");
+		fputs("Could not create new thread\n", stderr);
 		return 1;
 	}
 
@@ -345,7 +345,7 @@ int main() {
 			default:
 
 				// Panic if it's a libevdev internal error
-				puts("There was an unexpected behavior");
+				fputs("There was an unexpected behavior\n", stderr);
 				exit(1);
 
 		}
